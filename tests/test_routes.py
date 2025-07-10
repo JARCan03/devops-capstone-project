@@ -163,3 +163,9 @@ class TestAccountService(TestCase):
         up_account = respo.get_json()
         self.assertEqual(up_account["name"], "Joe Mama")
         #checks if the account name updated is reflected
+    
+    def test_delete_account(self):
+        """It should delete account"""
+        account = self._create_accounts(1)[0]
+        respo = self.client.delete(f"{BASE_URL}/{account.id}")
+        self.assertEqual(respo.status_code, status.HTTP_204_NO_CONTENT)
