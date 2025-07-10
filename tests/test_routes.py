@@ -149,4 +149,17 @@ class TestAccountService(TestCase):
         data = respo.get_json()
         self.assertEqual(len(data), 5)
         #checks if list contains the exact number of accounts
-    
+
+    def test_update_account(self):
+        """It should Update an existing Account"""
+        test_account = AccountFactory()
+        respo = self.client.post(BASE_URL, json=test_account.serialize())
+        self.assertEqual(respo.status_code, status.HTTP_201_CREATED)
+        
+        new_account = respo.get_json()
+        new_account["name"] = "Joe Mama"
+        respo = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)
+        self.assertEqual(respo.status_code, status.HTTP_200_OK)
+        up_account = respo.get_json()
+        self.assertEqual(up_account["name"], "Joe Mama")
+        #checks if the account name updated is reflected
