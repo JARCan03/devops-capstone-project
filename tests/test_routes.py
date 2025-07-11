@@ -133,14 +133,14 @@ class TestAccountService(TestCase):
         self.assertEqual(respo.status_code, status.HTTP_200_OK)
         data = respo.get_json()
         self.assertEqual(data["name"], account.name)
-        #checks to see if name is provided is the same
-    
+        # checks to see if name is provided is the same
+
     def test_account_not_found(self):
         """It should test if account doesn't exist"""
         respo = self.client.get(f"{BASE_URL}/0")
         self.assertEqual(respo.status_code, status.HTTP_404_NOT_FOUND)
-        #checks to see that account is indeed not found
-    
+        # checks to see that account is indeed not found
+
     def test_get_account_list(self):
         """It should list Accounts"""
         self._create_accounts(5)
@@ -148,31 +148,31 @@ class TestAccountService(TestCase):
         self.assertEqual(respo.status_code, status.HTTP_200_OK)
         data = respo.get_json()
         self.assertEqual(len(data), 5)
-        #checks if list contains the exact number of accounts
+        # checks if list contains the exact number of accounts
 
     def test_update_account(self):
         """It should Update an existing Account"""
         test_account = AccountFactory()
         respo = self.client.post(BASE_URL, json=test_account.serialize())
         self.assertEqual(respo.status_code, status.HTTP_201_CREATED)
-        
+
         new_account = respo.get_json()
         new_account["name"] = "Joe Mama"
         respo = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)
         self.assertEqual(respo.status_code, status.HTTP_200_OK)
         up_account = respo.get_json()
         self.assertEqual(up_account["name"], "Joe Mama")
-        #checks if the account name updated is reflected
-    
+        # checks if the account name updated is reflected
+
     def test_delete_account(self):
         """It should delete account"""
         account = self._create_accounts(1)[0]
         respo = self.client.delete(f"{BASE_URL}/{account.id}")
         self.assertEqual(respo.status_code, status.HTTP_204_NO_CONTENT)
-        #checks if account status is deleted
+        # checks if account status is deleted
 
     def test_method_not_allowed(self):
         """It should not allow an illegal method call"""
         resp = self.client.delete(BASE_URL)
         self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-        #checks if method call is illegal and disallows it
+        # checks if method call is illegal and disallows it
