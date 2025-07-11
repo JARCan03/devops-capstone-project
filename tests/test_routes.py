@@ -177,7 +177,7 @@ class TestAccountService(TestCase):
         """It should not allow an illegal method call"""
         resp = self.client.delete(BASE_URL)
         self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-        #checks if method call is illegal and disallows it
+        # checks if method call is illegal and disallows it
 
     def test_security_headers(self):
         """It should return security headers"""
@@ -191,6 +191,7 @@ class TestAccountService(TestCase):
         }
         for key, value in headers.items():
             self.assertEqual(response.headers.get(key), value)
+        # Check to test headers
 
     def test_cors_security(self):
         """It should return a CORS header"""
@@ -198,5 +199,3 @@ class TestAccountService(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # Check the CORS header
         self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
-=======
-        # checks if method call is illegal and disallows it
